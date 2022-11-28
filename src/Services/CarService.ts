@@ -11,7 +11,7 @@ export default class CarService {
   }
 
   private domain(car: ICar | null): Car | null {
-    if (car) return new Car(car);
+    if (car) { return new Car(car); }
     return null;
   }
 
@@ -41,11 +41,9 @@ export default class CarService {
   public async updateCar(id: string, obj: Partial<ICar>): Promise<Car | null> {
     if (!isValidObjectId(id)) throw Error('Invalid mongo id');
 
-    const selectedCar = await this.model.findById(id);
-
-    if (!selectedCar) throw Error('Car not found');
-
     const updatedCar = await this.model.update(id, obj);
+
+    if (!updatedCar) throw Error('Car not found');
 
     return this.domain(updatedCar);
   }
