@@ -5,7 +5,7 @@ const motoRoutes = Router();
 
 motoRoutes
   .post(
-    '/motorcycle',
+    '/motorcycles',
     (req, res, next) => new MotorcycleController(req, res, next).create(),
   )
   .get(
