@@ -15,6 +15,10 @@ carRoutes
   .get(
     '/cars/:id',
     (req, res, next) => new CarController(req, res, next).listById(),
+  )
+  .put(
+    '/cars/:id',
+    (req, res, next) => new CarController(req, res, next).updateCar(),
   );
 
 export default carRoutes;
