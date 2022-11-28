@@ -15,7 +15,7 @@ export default class CarController {
   }
 
   public async create() {
-    const { body } = this.req.body;
+    const { body } = this.req;
 
     try {
       const createdCar = await this.carService.create(body);

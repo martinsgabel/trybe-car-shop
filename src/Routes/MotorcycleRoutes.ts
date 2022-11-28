@@ -5,15 +5,15 @@ const motoRoutes = Router();
 
 motoRoutes
   .post(
-    '/cars',
+    '/motorcycle',
     (req, res, next) => new MotorcycleController(req, res, next).create(),
   )
   .get(
-    '/cars',
+    '/motorcycles',
     (req, res, next) => new MotorcycleController(req, res, next).listAllMotos(),
   )
   .get(
-    '/cars/:id',
+    '/motorcycles/:id',
     (req, res, next) => new MotorcycleController(req, res, next).listById(),
   );
 
