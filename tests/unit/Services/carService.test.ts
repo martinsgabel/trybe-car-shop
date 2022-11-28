@@ -92,11 +92,23 @@ describe('Testes da rota /car', function () {
   });
 
   it('listar carro específico através do id com sucesso', async function () {
-    sinon.stub(Model, 'findOne').resolves(resMock);
+    sinon.stub(Model, 'findById').resolves(resMock);
 
     const list = await service.listById('6348513f34c397abcad040b2');
 
     expect(list).to.be.deep.equal(resMock);
+
+    sinon.restore();
+  });
+
+  it('retornar erro caso o id seja inexistente', async function () {
+    sinon.stub(Model, 'findById').resolves(null);
+
+    try {
+      await service.listById('null');
+    } catch (error) {
+      expect((error as Error).message).to.be.equal('Car not found');
+    }
 
     sinon.restore();
   });
@@ -107,5 +119,17 @@ describe('Testes da rota /car', function () {
     const car = await service.updateCar('6377e9d04bb28538d964ff7e', updateMock);
 
     expect(car).to.be.deep.equal(updatedMock);
+  });
+
+  it('retornar erro caso o id do update seja inexistente', async function () {
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(null);
+
+    try {
+      await service.listById('null');
+    } catch (error) {
+      expect((error as Error).message).to.be.equal('Invalid mongo id');
+    }
+
+    sinon.restore();
   });
 });
