@@ -71,6 +71,29 @@ describe('Testes da rota /car', function () {
     },
   ];
 
+  const carListMockII: ICar[] = [
+    {
+      id: '634852326b35b59438fbea2f',
+      model: 'Marea',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.99,
+      doorsQty: 4,
+      seatsQty: 5,
+    },
+    {
+      id: '634852326b35b59438fbea31',
+      model: 'Tempra',
+      year: 1995,
+      color: 'Black',
+      status: false,
+      buyValue: 39,
+      doorsQty: 2,
+      seatsQty: 5,
+    },
+  ];
+
   it('criação de um carro com sucesso', async function () {
     sinon.stub(Model, 'create').resolves(resMock);
 
@@ -86,7 +109,7 @@ describe('Testes da rota /car', function () {
 
     const list = await service.listAllCars();
 
-    expect(list).to.be.deep.equal(carListMock);
+    expect(list).to.be.deep.equal(carListMockII);
 
     sinon.restore();
   });
@@ -101,13 +124,13 @@ describe('Testes da rota /car', function () {
     sinon.restore();
   });
 
-  it('retornar erro caso o id seja inexistente', async function () {
+  it('retornar erro caso o id seja inválido', async function () {
     sinon.stub(Model, 'findById').resolves(null);
 
     try {
       await service.listById('null');
     } catch (error) {
-      expect((error as Error).message).to.be.equal('Car not found');
+      expect((error as Error).message).to.be.equal('Invalid mongo id');
     }
 
     sinon.restore();
@@ -121,11 +144,11 @@ describe('Testes da rota /car', function () {
     expect(car).to.be.deep.equal(updatedMock);
   });
 
-  it('retornar erro caso o id do update seja inexistente', async function () {
-    sinon.stub(Model, 'findByIdAndUpdate').resolves(null);
+  it('retornar erro caso o id do update seja inválido', async function () {
+    sinon.stub(Model, 'update').resolves(undefined);
 
     try {
-      await service.listById('null');
+      await service.updateCar('null', mockCar);
     } catch (error) {
       expect((error as Error).message).to.be.equal('Invalid mongo id');
     }

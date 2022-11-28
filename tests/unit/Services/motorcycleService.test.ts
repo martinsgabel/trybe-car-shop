@@ -52,7 +52,7 @@ describe('Testes da rota /motorcycle', function () {
   ];
 
   it('criação de uma moto com sucesso', async function () {
-    sinon.stub(Model, 'create').resolves(motoMock);
+    sinon.stub(Model, 'create').resolves(resMock);
 
     const newCar = await service.create(motoMock);
 
@@ -81,13 +81,13 @@ describe('Testes da rota /motorcycle', function () {
     sinon.restore();
   });
 
-  it('retornar erro caso o id seja inexistente', async function () {
+  it('retornar erro caso o id seja inválido', async function () {
     sinon.stub(Model, 'findById').resolves(null);
 
     try {
       await service.listById('null');
     } catch (error) {
-      expect((error as Error).message).to.be.equal('Motorcycle not found');
+      expect((error as Error).message).to.be.equal('Invalid mongo id');
     }
 
     sinon.restore();
