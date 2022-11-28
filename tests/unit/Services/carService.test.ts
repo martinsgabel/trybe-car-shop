@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import ICar from '../../../src/Interfaces/ICar';
 import CarService from '../../../src/Services/CarService';
 
-describe('Teste da rota /car', function () {
+describe('Testes da rota /car', function () {
   const service = new CarService();
 
   const mockCar: ICar = {
